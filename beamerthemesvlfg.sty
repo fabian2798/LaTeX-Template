@@ -1,0 +1,177 @@
+\mode<presentation>
+
+\typeout{Beamer theme 'svlfg' v1.0 <07 Nov 22>}
+
+%========================Colors=====================================
+\definecolor{lightgreen}{HTML}{7DB58D}
+\definecolor{darkgreen}{HTML}{077323}
+\definecolor{intrasvlfg}{HTML}{0F7425}
+\definecolor{pbblue}{HTML}{0A75A8}
+\definecolor{olivedrab4}{HTML}{698B22}
+\definecolor{mybg}{HTML}{E7FEFF}
+%=======================Packages====================================
+\RequirePackage{tikz}\usetikzlibrary{shadings}\usetikzlibrary{calc}
+\RequirePackage{eso-pic}
+\RequirePackage{pifont} % \ding
+\RequirePackage{tcolorbox}
+%==========================Panels====================================
+\setbeamertemplate{navigation symbols}{} %Auskommentieren, um wieder zu sehen
+%=========================Fonts======================================
+\setbeamerfont{block title}{series=\bfseries, size=\normalsize}
+\setbeamerfont{headline}{series=\bfseries}
+\setbeamerfont{footline}{series=\bfseries}
+\setbeamerfont{title}{series=\bfseries, size=\Large}
+\setbeamerfont{subtitle}{series=\bfseries, size=\normalsize}
+\setbeamerfont{frametitle}{series=\bfseries, size=\large}
+\setbeamerfont{author}{series=\bfseries, size=\small}
+\setbeamerfont{institute}{series=\bfseries, size=\scriptsize}
+\setbeamerfont{date}{series=\bfseries, size=\scriptsize}
+\setbeamerfont{section in toc}{series=\bfseries, size=\small}
+\setbeamerfont{subsection in toc}{size=\footnotesize}
+\setbeamerfont{section title}{series=\bfseries, size=\Large}
+\setbeamerfont{itemize/enumerate body}{size=\footnotesize}
+\setbeamerfont{itemize/enumerate subbody}{size=\scriptsize}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\scriptsize}
+
+%=========================Theme======================================
+\useinnertheme{circles}
+\usecolortheme{rose}
+\usecolortheme{whale}
+\setbeamercolor{titlelike}{parent=structure,bg=white}
+\usefonttheme{serif}
+% =======================Fooder, progressbar as a slide===========================
+\def\progressbar@progressbar{} % the progress bar
+\newcount\progressbar@tmpcounta% auxiliary counter
+\newcount\progressbar@tmpcountb% auxiliary counter
+\newdimen\progressbar@pbht %progressbar height
+\newdimen\progressbar@pbwd %progressbar width
+\newdimen\progressbar@rcircle % radius for the circle
+\newdimen\progressbar@tmpdim % auxiliary dimension
+
+\progressbar@pbwd=\linewidth
+\progressbar@pbht=1pt
+\progressbar@rcircle=2.5pt
+% =============================the progress bar===============================
+\def\progressbar@progressbar{%
+
+    \progressbar@tmpcounta=\insertframenumber
+    \progressbar@tmpcountb=\inserttotalframenumber
+    \progressbar@tmpdim=\progressbar@pbwd
+    \multiply\progressbar@tmpdim by \progressbar@tmpcounta
+    \divide\progressbar@tmpdim by \progressbar@tmpcountb
+
+  \begin{tikzpicture}
+    \draw[pbblue!30,line width=\progressbar@pbht]
+      (0pt, 0pt) -- ++ (\progressbar@pbwd,0pt);
+
+    \filldraw[pbblue!30] %
+      (\the\dimexpr\progressbar@tmpdim-\progressbar@rcircle\relax, .5\progressbar@pbht) circle (\progressbar@rcircle);
+
+    \node[draw=pbblue!30,text width=3em,align=center,inner sep=1pt,
+      text=pbblue!70,anchor=west] at (11,0) {\insertframenumber/\inserttotalframenumber}; %seitenzahlen auf linke seite anchor=east at(0,0)
+  \end{tikzpicture}%
+}
+
+\addtobeamertemplate{footline}{} %kann getauscht werden mit headline für die ansicht am oberen rand
+{%
+ \begin{beamercolorbox}[wd=\paperwidth,ht=3ex,center,dp=1ex]{white}%
+    \progressbar@progressbar%
+  \end{beamercolorbox}%
+}
+% ============================Header=================================000
+\setbeamercolor{lower separation line head}{bg=darkgreen}
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip%
+    \vskip0.2cm%
+   \begin{beamercolorbox}[wd=\paperwidth,leftskip=.4cm,rightskip=.35cm,vmode]{frametitle}%
+        \begin{minipage}{2cm}%
+            \includegraphics[height=1.1cm]{svlfg-logo.png}%
+        \end{minipage}%
+        \begin{minipage}{\dimexpr\paperwidth-4.8cm}%
+    \usebeamerfont*{frametitle}\vspace{0.3cm}\color{intrasvlfg}\insertframetitle%
+      \ifx\insertframesubtitle\@empty%
+        \par%
+      \else
+        \par{\usebeamerfont*{framesubtitle}{\usebeamercolor[intrasvlfg]{framesubtitle}\insertframesubtitle}\par}%
+      \fi%%
+        \end{minipage}%
+        \begin{minipage}{2cm}%
+            \hfill
+            \includegraphics[height=1.1cm]{svlfg-logo.png}%
+        \end{minipage}%
+  \end{beamercolorbox}%
+  \vskip1.3ex
+  \begin{beamercolorbox}[colsep=1.5pt,wd=0.85\paperwidth]{lower separation line head}
+  \end{beamercolorbox}
+}
+% =========================Titlepage===================================
+\setbeamertemplate{title page}{%
+	\leavevmode
+	\vfill
+	\begin{tcolorbox}[colframe=intrasvlfg,colback=lightgreen!50]{}
+	\begin{beamercolorbox}[rounded=true, shadow=true, sep=4pt,center]{}
+		\usebeamerfont{title}\color{intrasvlfg}\inserttitle
+		\ifx\insertsubtitle\@empty\else \par 
+		{\usebeamerfont{subtitle}\color{intrasvlfg}\insertsubtitle}
+		\fi
+	\end{beamercolorbox}%
+	\end{tcolorbox}
+	\vfill    
+	\begin{beamercolorbox}[sep=11pt,center]{author} 
+		\usebeamerfont{author}\insertauthor\par
+	\end{beamercolorbox}%  	
+	\begin{beamercolorbox}[sep=4pt,center]{titlegraphic}		
+		\inserttitlegraphic
+	\end{beamercolorbox}%
+	\vfill 
+	\begin{beamercolorbox}[sep=4pt,center]{institute}		
+		\usebeamerfont{institute}\insertinstitute
+	\end{beamercolorbox}%
+	\vfill
+	\begin{beamercolorbox}[sep=4pt,center]{date} 		
+		\usebeamerfont{date}\tiny \insertdate
+	\end{beamercolorbox}}%
+% ==========================TOC TableofContent===========================
+\setbeamertemplate{section in toc}{%
+	\leavevmode\leftskip=6.5mm
+	\llap{%	  
+	   \usebeamercolor[bg]{section number projected}
+		\begin{pgfpicture}{0ex}{0ex}{1ex}{0.5ex}
+			\color{lightgreen}
+			\pgfpathcircle{\pgfpoint{0ex}{0.7ex}}{1.0ex}
+			\pgfusepath{fill}
+			\pgftext[base]{\color{fg}\inserttocsectionnumber}
+		\end{pgfpicture}%
+		\kern1.0ex%
+	}%
+	\kern1ex
+	\parbox[c]{\dimexpr\textwidth-30mm}{\color{intrasvlfg}\inserttocsection}
+	\par
+}
+\setbeamertemplate{subsection in toc}{%
+	\leavevmode\leftskip=11mm
+	{\usebeamercolor[olivedrab4]{subsection number projected}$\bullet$}%
+	\hskip1.0ex
+	\color{olivedrab4}\inserttocsubsection\par
+}
+% ================================Lists, Blocks============================ 
+\renewcommand{\insertsubenumlabel}{\alph{enumii}}
+\renewcommand{\insertsubsubenumlabel}{\roman{enumiii}}
+
+\setbeamertemplate{itemize item}{\bfseries\color{lightgreen}\ding{114}}
+\setbeamertemplate{itemize subitem}{\bfseries\color{lightgreen}\ding{108}}
+\setbeamertemplate{itemize subsubitem}{\bfseries\color{lightgreen}\ding{118}}
+
+\setbeamercolor{item projected}{fg=white,bg=lightgreen}
+\AtBeginEnvironment{block}{%
+\setbeamercolor{item projected}{fg=white,bg=blue}
+}%
+\AtBeginEnvironment{alertblock}{%
+	\setbeamercolor{item projected}{fg=white,bg=red}
+}%
+\AtBeginEnvironment{exampleblock}{%
+	\setbeamercolor{item projected}{fg=white,bg=darkgreen}
+}
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamercolor{block body}{bg=pbblue!20}
+\setbeamercolor{block title}{fg=pbblue!120,bg=pbblue!40}

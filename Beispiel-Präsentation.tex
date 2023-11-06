@@ -1,0 +1,140 @@
+%muss mehrfach erstellt werden
+\documentclass[xcolor={dvipsnames}]{beamer}
+%\documentclass[xcolor={dvipsnames},handout]{beamer}
+
+\usepackage[ngerman]{babel}
+\usepackage{color}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+%\usepackage{pgfpages}
+
+\graphicspath{{graphics/}}
+%\pgfpagesuselayout{4 on 1}[a4paper, border shrink=5mm]
+
+%Titelpage
+\title{Titel}
+\subtitle{Untertitel}
+\author{Autorenname}
+\institute{Institute}
+\date{\today}
+
+%Theme
+\usetheme{svlfg}
+
+%Logo
+\titlegraphic{\includegraphics[scale=0.15]{svlfg-logo.png}}
+
+\begin{document}
+
+\begin{frame}[noframenumbering,plain]
+\titlepage
+\end{frame}
+
+\begin{frame}[noframenumbering,plain]{\centerline{Inhaltsverzeichnis}}
+\tableofcontents
+\end{frame}
+
+\section{Abschnitt 1}
+\begin{frame}{\centerline{Titel 1}}{\centerline{subtitle}}
+\fcolorbox{green}{white}{Page1}
+\colorbox{green}{Page2}
+\end{frame}
+
+\begin{frame}{\centerline{Titel 2}}
+Page2
+\end{frame}
+
+\subsection{Unterabschnitt 1.1}
+
+\begin{frame}{\centerline{Titel 3}}
+\begin{enumerate}
+\item<1-> Nummer 1
+\item<2-> Nummer 2
+\item<3-> Nummer 3
+\begin{enumerate}
+\item Nummer 4
+\begin{enumerate}
+\item Nummer 5
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+Page 3
+\end{frame}
+
+\section{Abschnitt 2}
+\begin{frame}{\centerline{Titel 4}}
+Page 4
+\begin{block}{Blocktitel}
+Inhalt
+\end{block}
+\begin{alertblock}{alert}
+Inhalt
+\end{alertblock}
+\begin{example}{}
+Inhalt
+\end{example}
+\end{frame}
+
+\begin{frame}{\centerline{Titel 5}}
+Page 5
+\begin{columns}
+\column{.33\linewidth}
+\begin{block}{Blocktitel}
+\begin{enumerate}
+\item Nummer 1
+\item Nummer 2
+\item Nummer 3
+\end{enumerate}
+\end{block}
+\column{.33\linewidth}
+\begin{alertblock}{alert}
+\begin{enumerate}
+\item Nummer 1
+\item Nummer 2
+\item Nummer 3
+\end{enumerate}
+\end{alertblock}
+\column{.33\linewidth}
+\begin{exampleblock}{Example}
+\begin{enumerate}
+\item Nummer 1
+\item Nummer 2
+\item Nummer 3
+\end{enumerate}
+\end{exampleblock}
+\end{columns}
+\end{frame}
+
+\section{Abschnitt 3}
+\begin{frame}{\centerline{Titel 6}}
+Page 6
+\begin{itemize}
+\item Nummer 1
+\item Nummer 2
+\begin{itemize}
+\item Nummer 3
+\begin{itemize}
+\item Nummer 4
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{frame}
+\subsection{Abschnitt 3.1}
+\begin{frame}{\centerline{Titel 7}}
+Page 7
+\end{frame}
+\section{Abschnitt 4}
+\begin{frame}{\centerline{Titel 8}}
+Page 8
+\end{frame}
+\section{Abschnitt 5}
+\begin{frame}{\centerline{Titel 9}}
+Page 9
+\end{frame}
+\subsection{Abschnitt 5.1}
+\begin{frame}{\centerline{Titel 10}}
+Page 10
+\end{frame}
+\end{document}

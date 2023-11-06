@@ -1,0 +1,246 @@
+\mode<presentation>
+
+\typeout{Beamer theme 'svlfg' v1.0 <07 Nov 22>}
+
+\RequirePackage[utf8]{inputenx} 
+\RequirePackage{txfonts}
+\RequirePackage{ragged2e}\justifying
+\RequirePackage{tikz}\usetikzlibrary{shadings}
+\RequirePackage{background}\backgroundsetup{contents={}}
+\RequirePackage{textpos}
+\RequirePackage{appendixnumberbeamer}
+\RequirePackage{pifont}
+\RequirePackage{fontawesome}
+\RequirePackage{xfrac}
+\RequirePackage{booktabs}
+\RequirePackage{media9}
+\RequirePackage{microtype}
+
+\definecolor{himmelblau}{RGB}{135,206,250}
+\definecolor{darkgreen}{RGB}{51,102,0}
+\definecolor{mittelblau}{RGB}{0,0,205}
+
+%Fooder
+\AtBeginSection[]{\frame{\sectionpage}}
+\AtBeginSubsection[]{\frame{\subsectionpage}}
+
+\newcommand{\my@bigsize}{9}
+\newcommand{\my@medsize}{7}
+\newcommand{\my@smallsize}{5}
+
+\newlength{\my@tempsize}
+
+\newcounter{my@sectnum}
+
+\newcommand{\my@lastdigit}[1]{%
+  \loop\ifnum\value{#1}>9\addtocounter{#1}{-10}\repeat
+  \arabic{#1}%
+}
+
+\newcommand\my@fixedbox[2]{%
+  \makebox[#1]{\rule[-1ex]{0pt}{3.25ex}#2}%
+}
+
+\newcommand\my@colorbox[3]{%
+  {\setlength{\fboxsep}{0pt}\colorbox{#1}{\my@fixedbox{#2}{#3}}}%
+}
+
+\def\my@temptext{}
+
+\newcommand{\my@navbox}[1][]{%
+  \if\relax\detokenize{#1}\relax
+    \def\my@tempbox{\my@fixedbox}%
+  \else
+    \def\my@tempbox{\my@colorbox{#1}}%
+  \fi
+  \ifx\my@box\my@bigbox
+    \def\my@temptext{\my@lastdigit{my@sectnum}}%
+  \fi
+  \ifx\my@box\my@medbox
+    \def\my@temptext{$\diamond$}%
+  \fi
+  \ifx\my@box\my@smallbox
+    \def\my@temptext{$-$}%
+  \fi
+  \my@tempbox{\my@tempsize}{\my@temptext}%
+}
+
+\defbeamertemplate{navigation box}{home}{%
+  \setlength{\my@tempsize}{\my@box@size pt}%
+  \my@colorbox{himmelblau!50}{\my@tempsize}{$\equiv$}%farbe des startes
+}
+
+\defbeamertemplate{navigation box}{done}{%
+  \setlength{\my@tempsize}{\my@box@size pt}%
+  \my@navbox[himmelblau!50]%farbe des weiteren progresses
+}
+
+\defbeamertemplate{navigation box}{todo}{%
+  \setlength{\my@tempsize}{\my@box@size pt}%
+  \my@navbox
+}
+
+\newcommand{\my@bigbox}{\global\let\my@box@size=\my@bigsize\usebeamertemplate{navigation box}}
+\newcommand{\my@medbox}{\global\let\my@box@size=\my@medsize\usebeamertemplate{navigation box}}
+\newcommand{\my@smallbox}{\global\let\my@box@size=\my@smallsize\usebeamertemplate{navigation box}}
+
+\renewcommand{\sectionentry}[5]{\global\let\my@box=\my@bigbox\setcounter{my@sectnum}{#1}}
+\renewcommand{\beamer@subsectionentry}[5]{\global\let\my@box=\my@medbox}
+
+\renewcommand{\slideentry}[6]{%
+  \def\my@temp@i{1/1}%
+  \def\my@temp@ii{#4}%
+  \ifx\my@temp@i\my@temp@ii % title page
+    \setbeamertemplate{navigation box}[home]%
+  \else
+    \setbeamertemplate{navigation box}[done]%
+  \fi
+  \ifnum\c@section<#1%
+    \setbeamertemplate{navigation box}[todo]%
+  \else
+    \ifnum\c@section=#1\ifnum\c@subsection<#2%
+      \setbeamertemplate{navigation box}[todo]%
+    \else
+      \ifnum\c@subsection=#2\ifnum\c@subsectionslide<#3%
+        \setbeamertemplate{navigation box}[todo]%
+      \fi\fi
+    \fi\fi
+  \fi
+  \ifx\my@temp@i\my@temp@ii % title page
+    \beamer@link(#4){\my@bigbox}%
+  \else
+    \beamer@link(#4){\my@box}%
+  \fi
+  \global\let\my@box=\my@smallbox
+}
+
+\defbeamertemplate{footline}{progress}
+{%
+  {\color{lightgray}\hrule}\hbox{%horizontale linie farbe
+  \begin{beamercolorbox}[wd=.8\paperwidth,ht=2.25ex,dp=1ex,left]{footline}%
+    \kern2em\dohead
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.25ex,dp=1ex,right]{footline}%
+    \insertframenumber{}/\inserttotalframenumber\kern2em
+  \end{beamercolorbox}%
+  }%
+}
+
+%progressbar as a slide
+
+%\def\progressbar@progressbar{} % the progress bar
+%\newcount\progressbar@tmpcounta% auxiliary counter
+%\newcount\progressbar@tmpcountb% auxiliary counter
+%\newdimen\progressbar@pbht %progressbar height
+%\newdimen\progressbar@pbwd %progressbar width
+%\newdimen\progressbar@rcircle % radius for the circle
+%\newdimen\progressbar@tmpdim % auxiliary dimension
+
+%\progressbar@pbwd=\linewidth
+%\progressbar@pbht=1pt
+%\progressbar@rcircle=2.5pt
+
+% the progress bar
+%\def\progressbar@progressbar{%
+
+    %\progressbar@tmpcounta=\insertframenumber
+    %\progressbar@tmpcountb=\inserttotalframenumber
+    %\progressbar@tmpdim=\progressbar@pbwd
+    %\multiply\progressbar@tmpdim by \progressbar@tmpcounta
+    %\divide\progressbar@tmpdim by \progressbar@tmpcountb
+
+  %\begin{tikzpicture}
+    %\draw[pbblue!30,line width=\progressbar@pbht]
+      %(0pt, 0pt) -- ++ (\progressbar@pbwd,0pt);
+
+    %\filldraw[pbblue!30] %
+      %(\the\dimexpr\progressbar@tmpdim-\progressbar@rcircle\relax, .5\progressbar@pbht) circle (\progressbar@rcircle);
+
+    %\node[draw=pbblue!30,text width=3.5em,align=center,inner sep=1pt,
+      %text=pbblue!70,anchor=east] at (0,0) {\insertframenumber/\inserttotalframenumber};
+  %\end{tikzpicture}%
+%}
+
+%\addtobeamertemplate{headline}{}
+%{%
+  %\begin{beamercolorbox}[wd=\paperwidth,ht=4ex,center,dp=1ex]{white}%
+    %\progressbar@progressbar%
+  %\end{beamercolorbox}%
+%}
+
+
+%Header
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[progress]
+\setbeamercolor{lower separation line head}{bg=darkgreen}
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip%
+    \vskip0.45cm%
+   \begin{beamercolorbox}[wd=\paperwidth,leftskip=.3cm,rightskip=.3cm plus1fil,vmode]{frametitle}%
+        \begin{minipage}{2cm}%
+            \includegraphics[height=1.2cm]{svlfg-logo.png}%
+        \end{minipage}%
+        \begin{minipage}{\dimexpr\paperwidth-4.6cm}%
+    \usebeamerfont*{frametitle}\vspace{0.5cm}\color{mittelblau}\insertframetitle%
+      \ifx\insertframesubtitle\@empty%
+        \strut\par%
+      \else
+        \par{\usebeamerfont*{framesubtitle}{\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}\strut\par}%
+      \fi%%
+        \end{minipage}%
+        \begin{minipage}{2cm}%
+            \hfill
+            \includegraphics[height=1.2cm]{svlfg-logo.png}%
+        \end{minipage}%
+  \end{beamercolorbox}%
+  \vskip1.2ex
+  \begin{beamercolorbox}[colsep=1.5pt,wd=0.85\paperwidth]{lower separation line head}
+  \end{beamercolorbox}
+}
+
+%Titlepage
+\setbeamertemplate{title page}{%
+	\begin{beamercolorbox}[rounded=true, shadow=true, sep=4pt,center]{title}
+		\usebeamerfont{title}\inserttitle
+		\ifx\insertsubtitle\@empty\else \par 
+		{\usebeamerfont{subtitle}\insertsubtitle}
+		\fi
+	\end{beamercolorbox}%
+	\vfill     	
+	\begin{beamercolorbox}[sep=4pt,center]{author} 
+		\ifx\insertemail\@empty	  	
+		\usebeamerfont{author}\insertauthor
+		\else
+		\usebeamerfont{author}\insertauthor\par  \tiny \insertemail
+		\fi
+	\end{beamercolorbox}%
+	\vfill
+	\begin{beamercolorbox}[sep=4pt,center]{date} 		
+		\usebeamerfont{date}\insertdate
+	\end{beamercolorbox}% 
+}
+
+% Section and subsection in toc
+\setbeamertemplate{section in toc}{%
+	\leavevmode\leftskip=6mm
+	\llap{%	  
+	   \usebeamercolor[bg]{section number projected}
+		\begin{pgfpicture}{0ex}{0ex}{1ex}{0ex}
+			\color{bg}
+			\pgfpathcircle{\pgfpoint{0ex}{0.75ex}}{1.2ex}
+			\pgfusepath{fill}
+			\pgftext[base]{\color{fg}\inserttocsectionnumber}
+		\end{pgfpicture}%
+		\kern1ex%
+	}%
+	\kern1ex
+	\parbox[t]{\dimexpr\textwidth-30mm}{\inserttocsection}
+	\par
+}
+
+\setbeamertemplate{subsection in toc}{%
+	\leavevmode\leftskip=9mm
+	{\usebeamercolor[bg]{subsection number projected}\Large $\bullet$}%
+	\hskip1ex
+	\inserttocsubsection\par
+}
